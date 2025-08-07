@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AniResizer – Dr. Stone Image Resizer</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link 
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" 
+    rel="stylesheet"
+  />
+  <link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+    integrity="sha512-p6PzR8dX6GyFiA2TqWYi+7i4PmiV1UCEwjZplUEwHuyZcM4r39xFUPQfjh1z/nE1VkYF4GlD8/OQZqYf6s2Izg==" 
+    crossorigin="anonymous" 
+    referrerpolicy="no-referrer" 
+  />
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <main class="container">
+    <header class="site-header">
+      <div class="logo">
+        <i class="fas fa-leaf"></i>
+        <h1>AniResizer</h1>
+      </div>
+      <p class="subtitle">
+        Dr. Stone–Inspired Image Resizer – Rebuild Your Images with Science!
+      </p>
+      <blockquote class="inspiration">
+        “This is exhilarating! With science and code, we’ll rebuild civilization — one pixel at a time.”  
+        <cite>Senku Ishigami</cite>
+      </blockquote>
+    </header>
+
+    <section class="panels">
+      <article class="panel upload-panel" aria-labelledby="upload-title">
+        <h2 id="upload-title">
+          <i class="fas fa-cloud-upload-alt"></i> Upload Your Image
+        </h2>
+        <div 
+          id="drop-area" 
+          class="drop-area" 
+          aria-describedby="file-info" 
+          tabindex="0"
+        >
+          <i class="fas fa-file-image"></i>
+          <p>Drag &amp; Drop your image here</p>
+          <p>or</p>
+          <button id="browse-btn" class="btn secondary">
+            <i class="fas fa-folder-open"></i> Browse Files
+          </button>
+          <input 
+            type="file" 
+            id="file-input" 
+            accept="image/jpeg,image/png,image/webp" 
+            hidden
+          />
+        </div>
+        <p id="file-info" class="info">
+          Supported: JPG, PNG, WebP • Max size: 30 MB
+        </p>
+        <div class="preview" id="preview-container" hidden>
+          <h3>Original Preview</h3>
+          <img id="original-preview" alt="Original image preview" />
+        </div>
+      </article>
+
+      <article class="panel controls-panel" aria-labelledby="controls-title">
+        <h2 id="controls-title">
+          <i class="fas fa-sliders-h"></i> Resizing Controls
+        </h2>
+        <form id="resize-form">
+          <fieldset>
+            <label for="width">Width (px)</label>
+            <input type="number" id="width" min="1" required />
+          </fieldset>
+          <fieldset>
+            <label for="height">Height (px)</label>
+            <input type="number" id="height" min="1" required />
+          </fieldset>
+          <fieldset class="range-field">
+            <label for="quality">
+              Quality: <span id="quality-value">85</span>%
+            </label>
+            <input 
+              type="range" 
+              id="quality" 
+              min="10" 
+              max="100" 
+              value="85" 
+            />
+          </fieldset>
+          <fieldset class="checkbox-field">
+            <input 
+              type="checkbox" 
+              id="lock-ratio" 
+              checked 
+            />
+            <label for="lock-ratio">Lock Aspect Ratio</label>
+          </fieldset>
+          <fieldset class="checkbox-field">
+            <input 
+              type="checkbox" 
+              id="compress" 
+            />
+            <label for="compress">Compress Image</label>
+          </fieldset>
+
+          <div class="progress" id="progress-bar" hidden>
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="size-info" id="size-info" hidden>
+            <span>Original: <span id="orig-size">0 KB</span></span>
+            <span>New: <span id="new-size">0 KB</span></span>
+          </div>
+
+          <button 
+            type="button" 
+            id="resize-btn" 
+            class="btn primary" 
+            disabled
+          >
+            <i class="fas fa-compress-arrows-alt"></i> Resize
+          </button>
+          <button 
+            type="button" 
+            id="download-btn" 
+            class="btn primary" 
+            disabled
+          >
+            <i class="fas fa-download"></i> Download
+          </button>
+        </form>
+      </article>
+    </section>
+
+    <section class="features">
+      <h2 class="section-title">Features</h2>
+      <ul class="feature-list">
+        <li>
+          <i class="fas fa-magic"></i>
+          <h3>Smart Dimensions</h3>
+          <p>Auto-detects original size. Lock ratio for proportional scaling.</p>
+        </li>
+        <li>
+          <i class="fas fa-bolt"></i>
+          <h3>Instant Download</h3>
+          <p>Resized image ready immediately—no server needed.</p>
+        </li>
+        <li>
+          <i class="fas fa-mobile-alt"></i>
+          <h3>Mobile Friendly</h3>
+          <p>Full functionality on any device browser.</p>
+        </li>
+        <li>
+          <i class="fas fa-user-shield"></i>
+          <h3>Privacy First</h3>
+          <p>All processing stays local—no uploads to servers.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="technologies">
+      <h2 class="section-title">Built With</h2>
+      <ul class="tech-list">
+        <li><i class="fab fa-html5"></i> HTML5</li>
+        <li><i class="fab fa-css3-alt"></i> CSS3</li>
+        <li><i class="fab fa-js"></i> JavaScript</li>
+        <li><i class="fas fa-bolt"></i> Anime.js</li>
+      </ul>
+    </section>
+
+    <section class="faq">
+      <h2 class="section-title">FAQ</h2>
+      <dl class="faq-list">
+        <dt>What formats are supported?</dt>
+        <dd>JPG, JPEG, PNG, WebP—all processed locally.</dd>
+        <dt>Does it compress images?</dt>
+        <dd>Yes, enable “Compress Image” to reduce file size.</dd>
+        <dt>Is it secure?</dt>
+        <dd>Processing is in-browser—your files never leave your device.</dd>
+        <dt>Can I use it offline?</dt>
+        <dd>Yes, load it once and it works offline thereafter.</dd>
+      </dl>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="social">
+      <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <p>&copy; 2025 AniResizer. Built by Shinei Nouzen.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
