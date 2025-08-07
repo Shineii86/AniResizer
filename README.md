@@ -90,7 +90,7 @@ All operations are done **client-side**, making it fast, secure, and offline-cap
 
 ## 🔗 Live Demo
 
-* 🌐 **GitHub Pages:** [https://your-username.github.io/AniResizer](https://your-username.github.io/AniResizer)
+* 🌐 **GitHub Pages:** [https://Shineii86.github.io/AniResizer](https://Shineii86.github.io/AniResizer)
 * ▲ **Vercel:** [https://aniresizer.vercel.app](https://aniresizer.vercel.app) Soon...
 * 🌍 **Netlify:** [https://aniresizer.netlify.app](https://aniresizer.netlify.app) Soon...
 
