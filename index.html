@@ -29,6 +29,7 @@
         
         body {
             font-family: 'Noto Sans', sans-serif;
+            font-weight: 800; /* Bold by default */
             background: linear-gradient(135deg, var(--primary-dark), #1a3c1e);
             color: var(--light-gray);
             min-height: 100vh;
@@ -39,6 +40,11 @@
             position: relative;
             overflow-x: hidden;
         }
+        
+            h1, h2, h3, h4, h5, h6, strong, b {
+            font-weight: 800;
+       }
+
         
         body::before {
             content: '';
@@ -148,12 +154,26 @@
             transition: all 0.3s ease;
             background: rgba(46, 125, 50, 0.05);
             margin-bottom: 20px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
         
         .upload-area:hover {
             background: rgba(46, 125, 50, 0.1);
             border-color: var(--highlight-green);
             box-shadow: var(--glow);
+        }
+        
+        .upload-content {
+            transition: all 0.3s ease;
+        }
+        
+        .upload-area.has-image .upload-content {
+            display: none;
         }
         
         .upload-area i {
@@ -170,6 +190,18 @@
         
         .file-input {
             display: none;
+        }
+        
+        .image-preview {
+            max-width: 100%;
+            max-height: 250px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         
         .file-info {
@@ -265,25 +297,6 @@
         
         .btn i {
             margin-right: 8px;
-        }
-        
-        .preview-container {
-            text-align: center;
-            margin-top: 30px;
-        }
-        
-        .preview-title {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--accent-green);
-        }
-        
-        .image-preview {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            display: none;
         }
         
         .features-section {
@@ -475,15 +488,50 @@
             margin: 0 10px;
         }
         
-        /* Added particle effect for Dr. Stone science theme */
+        /* Enhanced particle effects */
         .particles {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
             z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .particle-small {
+            width: 3px;
+            height: 3px;
+            background: var(--highlight-green);
+            opacity: 0.6;
+        }
+        
+        .particle-medium {
+            width: 5px;
+            height: 5px;
+            background: var(--accent-green);
+            opacity: 0.4;
+        }
+        
+        .particle-large {
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, var(--highlight-green), transparent);
+            opacity: 0.3;
+        }
+        
+        .spark {
+            position: absolute;
+            width: 2px;
+            height: 10px;
+            background: linear-gradient(to bottom, var(--highlight-green), transparent);
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -512,18 +560,17 @@
             <div class="upload-panel">
                 <h2 class="panel-title"><i class="fas fa-cloud-upload-alt"></i> Upload Your Image</h2>
                 <div class="upload-area" id="dropArea">
-                    <i class="fas fa-file-image"></i> Drag & Drop your image here</p>
-                    <p>or</p>
-                    <button><i class="fas fa-folder-open"></i> Browse Files</button>
+                    <div class="upload-content">
+                        <i class="fas fa-file-image"></i>
+                        <p class="upload-text">Click here or Drag & Drop your image</p>
+                        <p>Supports JPG, PNG, WebP (Max 30MB)</p>
+                    </div>
+                    <img id="originalPreview" class="image-preview" alt="Original preview">
                     <input type="file" id="fileInput" class="file-input" accept="image/jpeg,image/png,image/webp">
                 </div>
                 <div class="file-info" id="fileInfo">
-                    <p>Supported formats: JPG, PNG, WebP</p>
-                    <p>Max file size: 30MB</p>
-                </div>
-                <div class="preview-container">
-                    <p class="preview-title">Original Image Preview</p>
-                    <img id="originalPreview" class="image-preview" alt="Original preview">
+                    <p>Processing happens entirely in your browser</p>
+                    <p>Your images never leave your device</p>
                 </div>
             </div>
             
@@ -655,6 +702,7 @@
                 </div>
             </div>
         </div>
+        <i><p class="quote">"This is exhilarating! With science and code, we'll rebuild civilization — one pixel at a time."<br>— Senku Ishigami</p></i>
     </div>
     
     <footer class="site-footer">
@@ -670,8 +718,9 @@
                     <i class="fab fa-telegram"></i>
                 </a>
             </div>
-            <p class="copyright">&copy; 2025 AniResizer. Built by Shinei Nouzen. Inspired by Dr. Stone.</p>
-        </div>
+            <p class="copyright" &copy; 2025 AniResizer. Built With <i class="fas fa-heart" style="color:#e53935;"></i> by <a href="https://github.com/Shineii86" target="_blank" style="color: var(--highlight-green); text-decoration: none;">Shinei Nouzen</a>.
+            </p>
+          </div>
     </footer>
 
     <script>
@@ -679,7 +728,6 @@
             // Elements
             const dropArea = document.getElementById('dropArea');
             const fileInput = document.getElementById('fileInput');
-            const browseBtn = document.getElementById('browseBtn');
             const originalPreview = document.getElementById('originalPreview');
             const widthInput = document.getElementById('width');
             const heightInput = document.getElementById('height');
@@ -708,7 +756,7 @@
             initParticles();
             
             // Event Listeners
-            browseBtn.addEventListener('click', () => fileInput.click());
+            dropArea.addEventListener('click', () => fileInput.click());
             fileInput.addEventListener('change', handleFileSelect);
             dropArea.addEventListener('dragover', handleDragOver);
             dropArea.addEventListener('dragleave', handleDragLeave);
@@ -769,6 +817,7 @@
                     originalImageData = e.target.result;
                     originalPreview.src = originalImageData;
                     originalPreview.style.display = 'block';
+                    dropArea.classList.add('has-image');
                     
                     const img = new Image();
                     img.onload = function() {
@@ -820,7 +869,14 @@
                 progressBar.style.display = 'block';
                 progressFill.style.width = '0%';
                 
-                // Use requestAnimationFrame for smooth progress simulation during processing
+                // Simulate progress animation
+                anime({
+                    targets: progressFill,
+                    width: '100%',
+                    duration: 1500,
+                    easing: 'easeInOutQuad'
+                });
+                
                 requestAnimationFrame(() => {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
@@ -837,7 +893,6 @@
                             newSize.textContent = formatFileSize(blob.size);
                             downloadBtn.disabled = false;
                             
-                            progressFill.style.width = '100%';
                             setTimeout(() => progressBar.style.display = 'none', 500);
                             
                             anime({
@@ -871,6 +926,7 @@
                 fileName = '';
                 originalPreview.src = '';
                 originalPreview.style.display = 'none';
+                dropArea.classList.remove('has-image');
                 widthInput.value = '';
                 heightInput.value = '';
                 qualitySlider.value = 85;
@@ -955,28 +1011,79 @@
             }
             
             function initParticles() {
-                // Simple particle system for science theme
                 const particlesContainer = document.getElementById('particles');
-                for (let i = 0; i < 20; i++) {
+                
+                // Create various types of particles
+                const particleTypes = ['particle-small', 'particle-medium', 'particle-large'];
+                
+                // Create 50 floating particles
+                for (let i = 0; i < 50; i++) {
                     const particle = document.createElement('div');
-                    particle.style.position = 'absolute';
-                    particle.style.width = '4px';
-                    particle.style.height = '4px';
-                    particle.style.background = 'var(--highlight-green)';
-                    particle.style.borderRadius = '50%';
-                    particle.style.opacity = '0.3';
+                    const type = particleTypes[Math.floor(Math.random() * particleTypes.length)];
+                    particle.className = `particle ${type}`;
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
                     particlesContainer.appendChild(particle);
                     
+                    // Animate particles
                     anime({
                         targets: particle,
-                        translateX: () => anime.random(-window.innerWidth / 2, window.innerWidth / 2),
-                        translateY: () => anime.random(-window.innerHeight / 2, window.innerHeight / 2),
-                        scale: [0, 1],
-                        opacity: [0, 0.5, 0],
-                        duration: anime.random(2000, 5000),
-                        easing: 'easeOutExpo',
+                        translateX: () => anime.random(-200, 200),
+                        translateY: () => anime.random(-200, 200),
+                        scale: [0, 1, 0.5, 1],
+                        opacity: [0, 0.8, 0.3, 0.6],
+                        duration: anime.random(3000, 8000),
+                        easing: 'easeInOutSine',
                         loop: true,
-                        delay: anime.random(0, 2000)
+                        delay: anime.random(0, 3000),
+                        direction: 'alternate'
+                    });
+                }
+                
+                // Create sparks that move across screen
+                for (let i = 0; i < 20; i++) {
+                    const spark = document.createElement('div');
+                    spark.className = 'spark';
+                    spark.style.left = '-10px';
+                    spark.style.top = Math.random() * 100 + '%';
+                    spark.style.transform = `rotate(${Math.random() * 360}deg)`;
+                    particlesContainer.appendChild(spark);
+                    
+                    anime({
+                        targets: spark,
+                        translateX: window.innerWidth + 20,
+                        translateY: () => anime.random(-100, 100),
+                        rotate: '+=180',
+                        opacity: [0, 1, 0],
+                        duration: anime.random(2000, 4000),
+                        easing: 'linear',
+                        loop: true,
+                        delay: anime.random(0, 5000)
+                    });
+                }
+                
+                // Create pulsing science symbols
+                const scienceSymbols = ['⚗️', '🧪', '⚛️', '🔬', '🧬'];
+                for (let i = 0; i < 10; i++) {
+                    const symbol = document.createElement('div');
+                    symbol.textContent = scienceSymbols[Math.floor(Math.random() * scienceSymbols.length)];
+                    symbol.style.position = 'absolute';
+                    symbol.style.fontSize = '20px';
+                    symbol.style.opacity = '0.1';
+                    symbol.style.left = Math.random() * 100 + '%';
+                    symbol.style.top = Math.random() * 100 + '%';
+                    symbol.style.pointerEvents = 'none';
+                    particlesContainer.appendChild(symbol);
+                    
+                    anime({
+                        targets: symbol,
+                        scale: [1, 1.5, 1],
+                        opacity: [0.1, 0.3, 0.1],
+                        rotate: '+=360',
+                        duration: anime.random(4000, 8000),
+                        easing: 'easeInOutSine',
+                        loop: true,
+                        delay: anime.random(0, 4000)
                     });
                 }
             }
