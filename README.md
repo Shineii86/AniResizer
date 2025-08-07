@@ -15,18 +15,18 @@
 
 ## 📌 Table of Contents
 
-* [About](#about)
-* [Screenshots](#screenshots)
-* [Features](#features)
-* [Live Demo](#live-demo)
-* [Technology Stack](#technology-stack)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Configuration & Options](#configuration--options)
-* [Project Structure](#project-structure)
-* [Contributing](#contributing)
-* [License](#license)
-* [Contact](#contact)
+* [About](#-about)
+* [Screenshots](#-screenshots)
+* [Features](#-features)
+* [Live Demo](#-live-demo)
+* [Technology Stack](#-technology-stack)
+* [Installation](#-installation)
+* [Usage](#-usage)
+* [Configuration & Options](#-configuration--options)
+* [Project Structure](#-project-structure)
+* [Contributing](#-contributing)
+* [License](#-license)
+* [Contact](#-contact)
 
 ---
 
